@@ -12,6 +12,7 @@ int main(void)
     char *buf = malloc(MAX_LINE * sizeof(char));
 	int should_run = 1; /*flag to determine when to exit program*/
     int opt_wait = 1; 
+    int status = -1;
 	
 	while(should_run){
 		printf("osh>");
@@ -51,8 +52,8 @@ int main(void)
         // parent
         if (pid > 0) {
             if (opt_wait) {
-                int status = -1;
-                wait(&status);
+                waitpid(pid, &status, 0);
+                status = -1;
             }
             // clean
             for (int i = 0; i < arg_len; i++)
