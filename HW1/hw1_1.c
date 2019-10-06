@@ -62,15 +62,7 @@ int main(void)
         }
 
         // exec
-        if (!strncmp(arg[0], "ls", 2))
-             execvp("ls", arg);
-        if (!strncmp(arg[0], "cat", 3))
-             execvp("cat", arg);
-        if (!strncmp(arg[0], "date", 4))
-             execvp("date", arg);
-        if (!strncmp(arg[0], "ps", 2))
-             execvp("ps", arg);
-        
+        execvp(arg[0], arg);
 	}
 
 	return 0;
