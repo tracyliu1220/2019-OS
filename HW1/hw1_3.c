@@ -25,25 +25,33 @@ int main(void)
     print(1);
 
     int main_pid = getppid();
+    int child1_pid = getpid();
+
     for (int i = 0; i < 2; i ++) {
-        if (getppid() == main_pid) {
+        if (getpid() == child1_pid) {
             pid = fork(); // fork 2
-            if (pid == 0)
+            if (pid == 0) {
                 print(2);
+            } 
         }
     }
 
-    if (getppid() != main_pid) {
-        pid = fork();
-        if (pid == 0)
+    if (getpid() == child1_pid) {
+        int status = -1;
+        waitpid(pid, &status, 0);
+    }
+
+    if (getpid() != child1_pid) {
+        for (int i = 0; i < 10000000; i++) {}
+        pid = fork(); // fork 3
+        if (pid == 0) {
             print(3);
-        else {
+        } else {
             int status = -1;
             waitpid(pid, &status, 0);
         }
     }
-        
 
-	return 0;
+    return 0;
 }
 
