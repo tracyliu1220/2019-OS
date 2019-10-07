@@ -8,28 +8,28 @@
 
 int main(void)
 {
-	char *arg[MAX_LINE/2+1] = {}; /*command line arguments*/
+    char *arg[MAX_LINE/2+1] = {}; /*command line arguments*/
     char *buf = malloc(MAX_LINE * sizeof(char));
-	int should_run = 1; /*flag to determine when to exit program*/
-    int opt_wait = 1; 
+    int should_run = 1; /*flag to determine when to exit program*/
+    int opt_wait = 1;
     int status = -1;
-	
-	while(should_run){
-		printf("osh>");
-		fflush(stdout);
+
+    while(should_run){
+        printf("osh>");
+        fflush(stdout);
         opt_wait = 1;
 
-		/**
-		* your code!
-		* After reading user input, the step are:
-		* (1) fork a child process using fork()
-		* (2) the child process will invoke execvp()
-		* (3) if command included &, parent will not invoke wait()
-		*/
-        
+        /**
+        * your code!
+        * After reading user input, the step are:
+        * (1) fork a child process using fork()
+        * (2) the child process will invoke execvp()
+        * (3) if command included &, parent will not invoke wait()
+        */
+
         int ret = read(0, buf, MAX_LINE);
         buf[ret] = '\0';
-        
+
         char *ptr = strtok(buf, " \n");
         int arg_len = 0;
         for (arg_len = 0; ptr != NULL; arg_len ++) {
@@ -63,8 +63,9 @@ int main(void)
 
         // exec
         execvp(arg[0], arg);
-	}
+        break;
+    }
 
-	return 0;
+    return 0;
 }
 
