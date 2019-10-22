@@ -39,6 +39,7 @@ int main() {
     int totalWT = 0;
     int totalTRT = 0;
     for (int i = 0; i < n; i ++) {
+        if (timer < process[i].arrival) timer = process[i].arrival;
         process[i].WT = timer - process[i].arrival;
         process[i].TRT = process[i].WT + process[i].burst;
         timer += process[i].burst;
