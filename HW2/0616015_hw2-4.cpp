@@ -14,7 +14,7 @@ struct P {
     }
 };
 
-int n;
+int n, qn;
 vector<P> process;
 vector<int> WT;
 vector<int> TRT;
@@ -26,7 +26,6 @@ bool compareByTime(P & a, P & b) {
 bool compareById(P & a, P & b) {
     return a.id < b.id;
 }
-
 
 int main() {
     // input
@@ -45,40 +44,61 @@ int main() {
         cin >> process[i].burst;
     for (int i = 0; i < n; i ++)
         cin >> process[i].prior;
-    
+
+    cin >> qn;
 
     // sort by time
     sort(process.begin(), process.end(), compareByTime);
     priority_queue<P, vector<P>, greater<P> > q;
+    queue<P> RR;
     int ptr = 0;
-    
+
     // simulate
     int timer = 0;
     int totalWT = 0;
     int totalTRT = 0;
-
     
     // simulate
-    while (ptr != n || q.size()) {
+    while (ptr != n || RR.size() || q.size()) {
         while (process[ptr].arrival <= timer && ptr < n) {
-            q.push(process[ptr]);
+            RR.push(process[ptr]);
             ptr ++;
         }
-        if (q.size() == 0) {
+        if (RR.size() == 0 && q.size() == 0) {
             timer = process[ptr].arrival;
             continue;
         }
-        P cur = q.top(); q.pop();
-        int idx = cur.id;
-        WT[idx] += timer - cur.last;
 
-        timer ++;
-        cur.last = timer;
-        cur.burst --;
-        if (cur.burst) {
-            q.push(cur);
+        if (RR.size()) {
+            P cur = RR.front(); RR.pop();
+            int idx = cur.id;
+            if (cur.burst <= qn) {
+                WT[idx] += timer - cur.arrival;
+                TRT[idx] += WT[idx] + cur.burst;
+                timer += cur.burst;
+            } else {
+                WT[idx] += timer - cur.arrival;
+                timer += qn;
+                cur.burst -= qn;
+                cur.last = timer;
+                q.push(cur);
+            }
+            continue;
         } else {
-            TRT[idx] = timer - cur.arrival;
+            while (q.size()) {
+                P cur = q.top(); q.pop();
+                int idx = cur.id;
+                WT[idx] += timer - cur.last;
+
+                timer ++;
+                cur.last = timer;
+                cur.burst --;
+                if (cur.burst) {
+                    q.push(cur);
+                } else {
+                    TRT[idx] = timer - cur.arrival;
+                }
+            }
         }
     }
 
