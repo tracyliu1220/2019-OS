@@ -72,9 +72,11 @@ int main() {
         int idx = cur.id;
         WT[idx] += timer - cur.last;
 
-        timer ++;
+        int amt = cur.burst;
+        if (ptr < n) amt = min(amt, process[ptr].arrival - timer);
+        timer += amt;
         cur.last = timer;
-        cur.burst --;
+        cur.burst -= amt;
         if (cur.burst) {
             q.push(cur);
         } else {
