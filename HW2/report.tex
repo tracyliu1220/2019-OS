@@ -1,0 +1,82 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{multicol}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{CJKutf8}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{graphicx}
+
+\title{
+    \textbf{Report Title} \\
+    \large Report Subtitle \\
+    \small Tracy Liu
+    \author Tracy Liu
+    \date{}
+}
+
+\geometry{a4paper,left=2cm,right=2cm,top=2.8cm,bottom=3.2cm}
+\setlength{\columnsep}{1cm}
+\setlength{\baselineskip}{100pt}
+\linespread{1.2}
+\graphicspath{ {./images/} }
+
+\begin{document}
+    \begin{CJK*}{UTF8}{bsmi}
+
+    % title
+    \begin{center}
+        \LARGE\textbf{2019 Fall Introduction to Operating Systems} \\
+        \large Homework 2 \\
+        \small 0616015 劉姿利 \\
+    \end{center}
+
+    % \begin{multicols*}{2}
+
+    % contents
+    \section{Briefly describe about your data structure for recording process time or anything you need to record.}
+        \subsection{struct P}
+        \begin{lstlisting}[language=C++]
+struct P {
+    int id;
+    int prior;
+    int arrival;
+    int burst;
+    int last;
+    bool operator>(const P & rhs) const {
+        return (prior > rhs.prior) ||
+               (prior == rhs.prior && last > rhs.last) ||
+               (prior == rhs.prior && last == rhs.last && id > rhs.id);
+    }
+};
+        \end{lstlisting}
+        　　用來儲存\ process\ 資料。\\
+        　　因為想要使用一些需要排序的結構，所以要將\ operator overloading\ 寫好。\\
+
+        \subsection{FCFS}
+            　　我使用\ C++ STL\ 中的\ vector\ 來儲存\ process informations，接著以\ process\ 的\ arrival time\ 為基準對\ vector\ 做\ sorting，最後紀錄一些重要時間點\ timer\ 來計算\ waiting time\ 以及\ turnaround time。
+            
+        \subsection{Priority Scheduling}
+            　　至於\ Priority Scheduling ，我用了\ C++ STL priority\_queue，它有內建\ heap\ 結構，將\ operator overloading\ 寫好就可以每次取出\ priority\ 最高的\ process。
+
+        \subsection{Round-Robin}
+            Round-Robin\ 的話我使用\ C++ STL\ 中的\ queue，它有\ first in first out\ 的特性，我就可以按照\ arrival time\ 將\ process\ 取出。
+
+        \subsection{Multilevel Feedback Queue}
+            　　這次\ multilevel feedback queue\ 要將\ RR\ 跟\ priority scheduling\ 組合在一起，所以我會先宣告一個\ queue\ 來處理\ RR\ 的步驟，再宣告一個\ priority\_queue\ 來處理\ priority scheduling，在\ queue\ 處理完成的\ process\ 就會被\ push\ 進入\ priority queue。
+
+    \section{Some problems you meet and how to resolve.}
+        \subsection{Problem}
+        　　一開始不知道如何計算\ waiting time。
+        \subsection{Solution}
+        　　後來想到可以在放入\ queue\ 或\ priority\_queue\ 之前記錄時間，存在\ struct P\ 中一個叫\ last\ 的變數裡面，並在下次從\ queue / priority\_queue\ 取出時拿當前時間相減，再加到那個\ process\ 的\ waiting time\ 上就可以了。
+
+    \section{What you learned from doing OS hw2 and something you want to discuss with TAs.}
+        　　為了保證寫出來的\ simulation\ 是對的，這次寫了一個生測資的東西，助教的\ email\ 中有寫到測資保證在跑\ Q1\ 的時候\ Q0\ 不會有東西進來，我花了一段時間才想到要如何\ random\ 用\ C++\ 生出這樣的測資，覺得挺有趣的。
+        
+
+
+    % \end{multicols*}
+    \end{CJK*}
+\end{document}
