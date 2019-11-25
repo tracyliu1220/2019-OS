@@ -1,0 +1,7 @@
+g++ -Wall 0616015_ST.cpp -o ST.out
+g++ -Wall 0616015_MT.cpp -lpthread -o MT.out
+
+time ./MT.out < input2.txt > output2_MT.txt
+time ./ST.out < input2.txt > output2_ST.txt
+
+vimdiff output2_ST.txt output2_MT.txt
