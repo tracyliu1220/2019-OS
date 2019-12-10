@@ -1,0 +1,3 @@
+#!/bin/bash
+
+g++ -O2 -Wall -o hw4_Series hw4_Series.cpp -lpthread

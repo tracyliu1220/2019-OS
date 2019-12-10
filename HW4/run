@@ -1,0 +1,3 @@
+#!/bin/bash
+
+time ./hw4_Series < input.in
