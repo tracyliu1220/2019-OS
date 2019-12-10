@@ -5,7 +5,7 @@
 using namespace std;
 
 #define MAX 100000000
-#define INTERVAL 100000000L
+#define INTERVAL 100000L
 typedef long long LL;
 LL n, k;
 
