@@ -37,7 +37,7 @@ void *count(void* data) {
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    cout << "0616015\n";
+    cout << "0616015" << endl;
     cin >> k >> n;
     cin >> input;
     
