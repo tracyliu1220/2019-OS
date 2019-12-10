@@ -3,7 +3,7 @@ using namespace std;
 
 int main() {
     int n = 100000000;
-    int k = 4;
+    int k = 1;
     cout << k << '\n';
     cout << n << '\n';
 

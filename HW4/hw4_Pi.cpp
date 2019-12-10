@@ -19,15 +19,15 @@ void *count(void* data) {
     LL x = (LL)data;
 
     unsigned int seed = time(NULL) + x * x * 100000;
-    LL rand_x;
-    LL rand_y;
+    double rand_x;
+    double rand_y;
     LL _cnt = 0;
 
     LL _sample = n / k;
     while (_sample --) {
-        rand_x = rand_r(&seed) % INTERVAL + 1;
-        rand_y = rand_r(&seed) % INTERVAL + 1;
-        if (rand_x * rand_x + rand_y * rand_y < INTERVAL * INTERVAL)
+        rand_x = (double)(rand_r(&seed) % (INTERVAL + 1)) / INTERVAL;
+        rand_y = (double)(rand_r(&seed) % (INTERVAL + 1)) / INTERVAL;
+        if (rand_x * rand_x + rand_y * rand_y < 1)
             _cnt ++;
     }
 
@@ -57,8 +57,10 @@ int main() {
         pthread_join(id[i], NULL);
     }
 
+    LL _total = 0;
     for (LL i = 0; i < k; i ++) {
         cout << "Thread " << i << ", There are " << cnt[i] << " points in the circle\n";
+        _total += cnt[i];
     }
     cout << "Pi: " << (double)(total * 4) / n << '\n';
 

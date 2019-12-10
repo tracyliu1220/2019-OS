@@ -10,9 +10,6 @@ LL n, k;
 
 sem_t sem[10];
 
-struct S {
-    LL x;
-};
 char* input = (char*)malloc(sizeof(char) * MAX + 5);
 pthread_t id[10];
 LL cnt[10] = {0};
