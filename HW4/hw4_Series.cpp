@@ -1,4 +1,4 @@
-#pragma GCC optimize("O3")
+#pragma GCC optimize("Ofast")
 #include <bits/stdc++.h>
 #include <pthread.h>
 #include <semaphore.h>
@@ -35,6 +35,8 @@ void *count(void* data) {
 
 
 int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
     cout << "0616015\n";
     cin >> k >> n;
     cin >> input;
