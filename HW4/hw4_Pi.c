@@ -62,7 +62,8 @@ int main() {
         cout << "Thread " << i << ", There are " << cnt[i] << " points in the circle\n";
         _total += cnt[i];
     }
-    cout << "Pi: " << (double)(total * 4) / n << '\n';
+    // printf("Pi : %lf\n", (double)(total * 4) / n);
+    cout << "Pi : " << fixed << setprecision(6) << (double)(total * 4) / n << '\n';
 
     return 0;
 }

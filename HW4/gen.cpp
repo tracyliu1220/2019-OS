@@ -2,8 +2,10 @@
 using namespace std;
 
 int main() {
-    int n = 100000000;
+    srand(time(NULL));
     int k = 1;
+    int n = 100000000;
+
     cout << k << '\n';
     cout << n << '\n';
 
