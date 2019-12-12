@@ -19,13 +19,19 @@ void *count(void* data) {
     LL L = n * (x / (double)k);
     LL R = n * ((x + 1) / (double)k);
 
+    LL _cnt[10] = {0};
+
     // cout << L << ' ' << R << endl;
 
     for (LL i = L; i < R; i ++) {
         LL num = (int)(input[i] - '0');
-        sem_wait(&sem[num]);
-        cnt[num] ++;
-        sem_post(&sem[num]);
+        _cnt[num] ++;
+    }
+
+    for (LL i = 0; i < 10; i ++) {
+        sem_wait(&sem[i]);
+        cnt[i] += _cnt[i];
+        sem_post(&sem[i]);
     }
     pthread_exit(NULL);
 }
